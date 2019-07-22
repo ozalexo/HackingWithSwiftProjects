@@ -35,6 +35,12 @@ class ViewController: UIViewController {
         askQuestion()
     }
 
+
+    @IBAction func resetScore(_ sender: UIBarButtonItem) {
+        score = 0
+        sender.title = "Score: 0"
+    }
+
     func askQuestion(action: UIAlertAction! = nil) {
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
@@ -59,6 +65,7 @@ class ViewController: UIViewController {
         let ac = UIAlertController(title: title, message: "Your score is \(score)", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: askQuestion))
         present(ac, animated: true)
+        navigationItem.rightBarButtonItem?.title = "Score \(score)"
     }
 }
 
