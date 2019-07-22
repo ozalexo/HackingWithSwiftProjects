@@ -37,5 +37,12 @@ class ViewController: UITableViewController {
         return cell
     }
 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let vc = storyboard?.instantiateViewController(withIdentifier: "Detail") as? DetailViewController {
+            vc.selectedImage = pictures[indexPath.row]
+            vc.title = vc.selectedImage
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
 }
 
