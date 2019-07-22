@@ -17,10 +17,37 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ObL-8Z-xSG">
+                                <rect key="frame" x="107" y="230" width="200" height="100"/>
+                                <state key="normal" image="us"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZfT-Am-QaI">
+                                <rect key="frame" x="107" y="360" width="200" height="100"/>
+                                <state key="normal" image="us"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JrM-39-rQP">
+                                <rect key="frame" x="107" y="100" width="200" height="100"/>
+                                <state key="normal" image="us"/>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="ObL-8Z-xSG" firstAttribute="top" secondItem="JrM-39-rQP" secondAttribute="bottom" constant="30" id="1KZ-T7-8bj"/>
+                            <constraint firstItem="ZfT-Am-QaI" firstAttribute="centerX" secondItem="ObL-8Z-xSG" secondAttribute="centerX" id="DqF-zH-v2r"/>
+                            <constraint firstItem="JrM-39-rQP" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="FS9-6B-iUQ"/>
+                            <constraint firstItem="ZfT-Am-QaI" firstAttribute="top" secondItem="ObL-8Z-xSG" secondAttribute="bottom" constant="30" id="O7f-7n-98J"/>
+                            <constraint firstItem="JrM-39-rQP" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="12" id="XbZ-Uu-2Mi"/>
+                            <constraint firstItem="ObL-8Z-xSG" firstAttribute="centerX" secondItem="JrM-39-rQP" secondAttribute="centerX" id="wbT-uJ-ecw"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="nee-aB-xcb"/>
+                    <connections>
+                        <outlet property="button1" destination="JrM-39-rQP" id="KB4-dE-fXB"/>
+                        <outlet property="button2" destination="ObL-8Z-xSG" id="8Xj-5L-WDp"/>
+                        <outlet property="button3" destination="ZfT-Am-QaI" id="MB2-84-g12"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -45,4 +72,7 @@
             <point key="canvasLocation" x="131.8840579710145" y="-535.04464285714278"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="us" width="200" height="100"/>
+    </resources>
 </document>
