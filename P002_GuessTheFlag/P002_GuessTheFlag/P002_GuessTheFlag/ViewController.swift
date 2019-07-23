@@ -8,12 +8,13 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
 
     @IBOutlet var button1: UIButton!
     @IBOutlet var button2: UIButton!
     @IBOutlet var button3: UIButton!
 
+    var informer = UILabel()
     var countries = [String]()
     var score = 0
     var correctAnswer = 0
@@ -32,13 +33,28 @@ class ViewController: UIViewController {
         countries += ["estonia", "france", "germany", "ireland",
                       "italy", "monaco", "nigeria", "poland", "russia", "spain",
                       "uk", "us"]
+
+        prepareInformer()
+
         askQuestion()
+
+    }
+
+    private func prepareInformer () {
+        informer.numberOfLines = 1
+        // Disable displaying ellipsis during UILabel's text update
+        informer.translatesAutoresizingMaskIntoConstraints = false
+        informer.adjustsFontSizeToFitWidth = false
+        informer.textAlignment = .left
+        informer.font = UIFont(name: "Verdana", size: 14.0)
+        informer.text = getInformerText(score: score)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: informer)
     }
 
 
-    @IBAction func resetScore(_ sender: UIBarButtonItem) {
+    @IBAction func reset(action: UIAlertAction! = nil) {
         score = 0
-        sender.title = "Score: 0"
+        askQuestion()
     }
 
     func askQuestion(action: UIAlertAction! = nil) {
@@ -52,20 +68,37 @@ class ViewController: UIViewController {
         title = countries[correctAnswer].uppercased()
     }
 
+    private func getInformerText(score: Int) -> String {
+        return "Score\t\(score)"
+    }
+
+    private func showAlert(title: String, message: String, actionTitle: String, handler: ((UIAlertAction) -> Void)?, image: UIImage? = nil) {
+        let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: actionTitle, style: .default, handler: handler))
+        present(ac, animated: true)
+    }
+
+
     @IBAction func buttonTapped(_ sender: UIButton) {
         var title: String
+
         if sender.tag == correctAnswer {
             title = "Correct"
             score += 1
+            correctAnswer += 1
         } else {
             title = "Wrong"
             score -= 1
         }
 
-        let ac = UIAlertController(title: title, message: "Your score is \(score)", preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: askQuestion))
-        present(ac, animated: true)
-        navigationItem.rightBarButtonItem?.title = "Score \(score)"
+        informer.text = getInformerText(score: score)
+        showAlert(
+            title: title,
+            message: "Your score is \(score)",
+            actionTitle: "Continue",
+            handler: askQuestion
+        )
+
     }
 }
 
