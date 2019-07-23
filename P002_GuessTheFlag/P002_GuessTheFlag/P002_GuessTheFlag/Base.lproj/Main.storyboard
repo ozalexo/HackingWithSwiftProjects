@@ -51,7 +51,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="nee-aB-xcb"/>
+                    <navigationItem key="navigationItem" id="nee-aB-xcb">
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="eVK-vV-m7M">
+                            <connections>
+                                <action selector="resetWithAction:" destination="BYZ-38-t0r" id="GZe-Db-mqL"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="button1" destination="JrM-39-rQP" id="KB4-dE-fXB"/>
                         <outlet property="button2" destination="ObL-8Z-xSG" id="8Xj-5L-WDp"/>

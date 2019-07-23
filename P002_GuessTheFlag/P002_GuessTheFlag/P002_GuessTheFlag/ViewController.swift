@@ -18,6 +18,8 @@ final class ViewController: UIViewController {
     var countries = [String]()
     var score = 0
     var correctAnswer = 0
+    var answeredQuestions = 0
+    var maxQuestions = 10 // Maximum amount of questions for one game
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +36,7 @@ final class ViewController: UIViewController {
                       "italy", "monaco", "nigeria", "poland", "russia", "spain",
                       "uk", "us"]
 
+        navigationItem.rightBarButtonItem?.isEnabled = false
         prepareInformer()
 
         askQuestion()
@@ -41,19 +44,23 @@ final class ViewController: UIViewController {
     }
 
     private func prepareInformer () {
-        informer.numberOfLines = 1
+        informer.numberOfLines = 2
         // Disable displaying ellipsis during UILabel's text update
         informer.translatesAutoresizingMaskIntoConstraints = false
         informer.adjustsFontSizeToFitWidth = false
         informer.textAlignment = .left
-        informer.font = UIFont(name: "Verdana", size: 14.0)
-        informer.text = getInformerText(score: score)
+        informer.font = UIFont(name: "Verdana", size: 12.0)
+        informer.attributedText = getInformerText()
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: informer)
     }
 
 
     @IBAction func reset(action: UIAlertAction! = nil) {
         score = 0
+        correctAnswer = 0
+        answeredQuestions = 0
+        informer.attributedText = getInformerText()
+        navigationItem.rightBarButtonItem?.isEnabled = false
         askQuestion()
     }
 
@@ -68,8 +75,20 @@ final class ViewController: UIViewController {
         title = countries[correctAnswer].uppercased()
     }
 
-    private func getInformerText(score: Int) -> String {
-        return "Score\t\(score)"
+    private func getInformerText() -> NSAttributedString {
+        let boldAttrs = [
+            NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 12),
+            NSAttributedString.Key.foregroundColor: score >= 0 ? UIColor.green : UIColor.red
+        ]
+
+        let prefixNormText = "Score\t"
+        let scoreBoldText = NSMutableAttributedString(string: String(score), attributes: boldAttrs)
+        let postfixNormText = "\nQuestion\t\(answeredQuestions) of \(maxQuestions)"
+
+        let attributedString = NSMutableAttributedString(string: prefixNormText)
+        attributedString.append(scoreBoldText)
+        attributedString.append(NSMutableAttributedString(string: postfixNormText))
+        return attributedString
     }
 
     private func showAlert(title: String, message: String, actionTitle: String, handler: ((UIAlertAction) -> Void)?, image: UIImage? = nil) {
@@ -80,24 +99,34 @@ final class ViewController: UIViewController {
 
 
     @IBAction func buttonTapped(_ sender: UIButton) {
-        var title: String
 
+        answeredQuestions += 1
+        if (answeredQuestions == 1) {
+            navigationItem.rightBarButtonItem?.isEnabled = true
+        }
         if sender.tag == correctAnswer {
-            title = "Correct"
             score += 1
             correctAnswer += 1
+            askQuestion()
         } else {
-            title = "Wrong"
             score -= 1
+            showAlert(
+                title: "Wrong",
+                message: "That’s the flag of \(countries[sender.tag].uppercased())",
+                actionTitle: "Continue",
+                handler: askQuestion
+            )
+        }
+        if answeredQuestions == maxQuestions {
+            showAlert(
+                title: "The end",
+                message: "Your final score: \(score)",
+                actionTitle: "Start again",
+                handler: reset
+            )
         }
 
-        informer.text = getInformerText(score: score)
-        showAlert(
-            title: title,
-            message: "Your score is \(score)",
-            actionTitle: "Continue",
-            handler: askQuestion
-        )
+        informer.attributedText = getInformerText()
 
     }
 }
