@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  P001_StormViewer
+//  P003_SocialMedia
 //
 //  Created by Alexey Ozerov on 22/07/2019.
 //  Copyright © 2019 Alexey Ozerov. All rights reserved.
