@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UITableViewController {
+class ViewController: UITableViewController, UIActivityItemSource {
 
     var pictures = [String]()
 
@@ -17,6 +17,7 @@ class ViewController: UITableViewController {
 
         title = "Storm Viewer"
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(recommendTheApp))
 
         let fm = FileManager.default
         let path = Bundle.main.resourcePath!
@@ -48,5 +49,33 @@ class ViewController: UITableViewController {
             navigationController?.pushViewController(vc, animated: true)
         }
     }
-}
 
+    // MARK: - Activity View Controller
+
+    /**
+     * Made with https://www.hackingwithswift.com/articles/118/uiactivityviewcontroller-by-example
+     * Paragraph: "Adding a subject"
+     */
+
+    @objc func recommendTheApp() {
+        let items = [self]
+        let avc = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        avc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(avc, animated: true)
+    }
+
+    // This text will be shared via Telegram or Messages
+    func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
+        return "Recommend StormViewer"
+    }
+
+    // This text will be a body of new email
+    func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
+        return "I would recommend StormViewer"
+    }
+
+    // This text will be a subject of new email
+    func activityViewController(_ activityViewController: UIActivityViewController, subjectForActivityType activityType: UIActivity.ActivityType?) -> String {
+        return "App recommendation: StormViewer"
+    }
+}
