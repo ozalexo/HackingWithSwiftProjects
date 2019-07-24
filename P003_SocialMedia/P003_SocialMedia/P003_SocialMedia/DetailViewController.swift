@@ -48,7 +48,11 @@ class DetailViewController: UIViewController {
             print("No image found")
             return
         }
-        let vc = UIActivityViewController(activityItems: [image], applicationActivities: [])
+        var shareableItems: [Any] = [image]
+        if let imageTitle = selectedImage {
+            shareableItems.append(imageTitle)
+        }
+        let vc = UIActivityViewController(activityItems: shareableItems, applicationActivities: [])
         vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         present(vc, animated: true)
     }
