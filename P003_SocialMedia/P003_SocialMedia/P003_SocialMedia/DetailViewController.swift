@@ -42,29 +42,15 @@ class DetailViewController: UIViewController {
         super.viewWillDisappear(animated)
         navigationController?.hidesBarsOnTap = false
     }
-    
+
     @objc func shareTapped () {
-        guard let image = imageView.image?.jpegData(compressionQuality: 0.8) else {
-            print("No image found")
+        guard let image = imageView.image, let title = selectedImage else {
             return
         }
-        var shareableItems: [Any] = [image]
-        if let imageTitle = selectedImage {
-            shareableItems.append(imageTitle)
-        }
-        let vc = UIActivityViewController(activityItems: shareableItems, applicationActivities: [])
-        vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
-        present(vc, animated: true)
+        let items: [Any] = [ActivityItemSource(title: title, image: image)]
+        let shareActivityController = UIActivityViewController(activityItems: items, applicationActivities: nil)
+
+        shareActivityController.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(shareActivityController, animated: true)
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
