@@ -32,13 +32,14 @@ final class ActivityItemSource: NSObject, UIActivityItemSource {
     func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
         switch activityType {
         case UIActivity.ActivityType(rawValue: "ph.telegra.Telegraph.Share"):
-            // In case of Telegram we should convert image into PNG.
-            // I do not know why TG does not accept JPG.
-            if let pngData = image.pngData() {
-                return UIImage(data: pngData)
-            } else {
-                return "No image found"
-            }
+            // Split filename to name and extension
+            let url = URL(fileURLWithPath: title)
+            let fn = url.deletingPathExtension().lastPathComponent
+            let ext = url.pathExtension
+            print("fn: \(fn) | ext: \(ext)")
+            // File URL, return for UIActivityViewController
+            let fileURL = Bundle.main.url(forResource: fn, withExtension: ext)
+            return fileURL
         default:
             if let image = image.jpegData(compressionQuality: 1.0) {
                 return image
