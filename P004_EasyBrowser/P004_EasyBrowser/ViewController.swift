@@ -13,6 +13,7 @@ class ViewController: UIViewController, WKNavigationDelegate {
 
     var webView: WKWebView!
     var progressView: UIProgressView!
+    var websites = ["apple.com", "hackingwithswift.com"]
 
     // loadView() gets called before viewDidLoad()
     override func loadView() {
@@ -43,6 +44,10 @@ class ViewController: UIViewController, WKNavigationDelegate {
 
         toolbarItems = [progressButton, spacer, refresh]
         navigationController?.isToolbarHidden = false
+
+        // Load first web page
+        let url = URL(string: "https://" + websites[0])!
+        webView.load(URLRequest(url: url))
     }
 
     override func viewWillDisappear(_ animated: Bool) {
