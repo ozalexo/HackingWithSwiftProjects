@@ -63,8 +63,9 @@ class ViewController: UIViewController, WKNavigationDelegate {
     @objc func openTapped() {
         let ac = UIAlertController(title: "Open page...", message: nil, preferredStyle: .actionSheet)
 
-        ac.addAction(UIAlertAction(title: "apple.com", style: .default, handler: openPage))
-        ac.addAction(UIAlertAction(title: "hackingwithswift.com", style: .default, handler: openPage))
+        for website in websites {
+            ac.addAction(UIAlertAction(title: website, style: .default, handler: openPage))
+        }
         // "Cancel"button doesn’t provide a handler parameter,
         // which means iOS will just dismiss the alert controller if it’s tapped.
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
