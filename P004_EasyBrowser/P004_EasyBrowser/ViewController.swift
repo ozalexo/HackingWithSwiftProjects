@@ -86,6 +86,14 @@ class ViewController: UIViewController, WKNavigationDelegate {
         title = webView.title
     }
 
+    func displayNotAllowedAlert (host: String) {
+        let ac = UIAlertController(title: "Host does not allowed", message: "\(host) is out of allowed hosts list", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Ok", style: .cancel))
+        ac.popoverPresentationController?.sourceView = self.view
+        ac.popoverPresentationController?.sourceRect = self.view.frame
+        present(ac, animated: true)
+    }
+
     // Only allowed web pages may be visited
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         let url = navigationAction.request.url
@@ -97,6 +105,7 @@ class ViewController: UIViewController, WKNavigationDelegate {
                     return
                 }
             }
+            displayNotAllowedAlert(host: host)
         }
 
         decisionHandler(.cancel)
