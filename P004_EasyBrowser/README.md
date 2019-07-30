@@ -10,3 +10,9 @@ func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
 ```
 
 Solved after implementing of progress bar. Root cause: due to DNS adblock on my server some requests are blocked (redirect to incorrect IP address), so, full loading of web page was delayed by timeout. That's why title was not updated immidiately. But in few seconds (approx ~1 minute) title was updated.
+
+## Question
+
+Challenge 002: "Try making two new toolbar items with the titles Back and Forward. You should make them use webView.goBack and webView.goForward."
+
+Q: How to implement buttons with native "<" and ">" icons? I mean, is it possible to use buttons' icons embedded into SDK?
