@@ -12,12 +12,14 @@ import WebKit
 class ViewController: UIViewController, WKNavigationDelegate {
 
     var webView: WKWebView!
+    var progressView: UIProgressView!
 
     // loadView() gets called before viewDidLoad()
     override func loadView() {
         webView = WKWebView()
         webView.navigationDelegate = self
         webView.allowsBackForwardNavigationGestures = true
+        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
         view = webView
     }
 
@@ -30,12 +32,27 @@ class ViewController: UIViewController, WKNavigationDelegate {
             action: #selector(openTapped)
         )
 
+        // Progress bar
+        progressView = UIProgressView(progressViewStyle: .default)
+        progressView.sizeToFit()
+        let progressButton = UIBarButtonItem(customView: progressView)
+
         // ToolBar Items
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let refresh = UIBarButtonItem(barButtonSystemItem: .refresh, target: webView, action: #selector(webView.reload))
 
-        toolbarItems = [spacer, refresh]
+        toolbarItems = [progressButton, spacer, refresh]
         navigationController?.isToolbarHidden = false
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), context: nil)
+    }
+
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == "estimatedProgress" {
+            progressView.progress = Float(webView.estimatedProgress)
+        }
     }
 
     @objc func openTapped() {

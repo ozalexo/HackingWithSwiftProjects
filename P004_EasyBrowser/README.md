@@ -9,3 +9,4 @@ func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
 }
 ```
 
+Solved after implementing of progress bar. Root cause: due to DNS adblock on my server some requests are blocked (redirect to incorrect IP address), so, full loading of web page was delayed by timeout. That's why title was not updated immidiately. But in few seconds (approx ~1 minute) title was updated.
