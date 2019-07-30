@@ -30,6 +30,12 @@ class ViewController: UIViewController, WKNavigationDelegate {
             action: #selector(openTapped)
         )
 
+        // ToolBar Items
+        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let refresh = UIBarButtonItem(barButtonSystemItem: .refresh, target: webView, action: #selector(webView.reload))
+
+        toolbarItems = [spacer, refresh]
+        navigationController?.isToolbarHidden = false
     }
 
     @objc func openTapped() {
@@ -54,7 +60,6 @@ class ViewController: UIViewController, WKNavigationDelegate {
     // Method to set up title in the Navigation bar
     // Issue: NavBar title does not update on first page load (only after changing page form one to another)
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        print("WebView title: \(String(describing: webView.title))")
         title = webView.title
     }
 
