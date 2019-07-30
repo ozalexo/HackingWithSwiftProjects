@@ -50,5 +50,13 @@ class ViewController: UIViewController, WKNavigationDelegate {
         webView.load(URLRequest(url: url))
     }
 
+
+    // Method to set up title in the Navigation bar
+    // Issue: NavBar title does not update on first page load (only after changing page form one to another)
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        print("WebView title: \(String(describing: webView.title))")
+        title = webView.title
+    }
+
 }
 
