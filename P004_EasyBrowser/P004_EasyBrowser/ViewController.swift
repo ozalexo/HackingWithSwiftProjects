@@ -13,7 +13,8 @@ class ViewController: UIViewController, WKNavigationDelegate {
 
     var webView: WKWebView!
     var progressView: UIProgressView!
-    var websites = ["apple.com", "hackingwithswift.com"]
+    var websites = [String]()
+    var selectedInitialPageIndex = 0
 
     // loadView() gets called before viewDidLoad()
     override func loadView() {
@@ -48,7 +49,7 @@ class ViewController: UIViewController, WKNavigationDelegate {
         navigationController?.isToolbarHidden = false
 
         // Load first web page
-        let url = URL(string: "https://" + websites[0])!
+        let url = URL(string: "https://" + websites[selectedInitialPageIndex])!
         webView.load(URLRequest(url: url))
     }
 
@@ -83,7 +84,6 @@ class ViewController: UIViewController, WKNavigationDelegate {
 
 
     // Method to set up title in the Navigation bar
-    // Issue: NavBar title does not update on first page load (only after changing page form one to another)
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         title = webView.title
     }
