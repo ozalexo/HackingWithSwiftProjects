@@ -15,7 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1A1385C722E5FC9800D39536 /* P002_GuessTheFlag.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = P002_GuessTheFlag.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A1385C722E5FC9800D39536 /* P006A_AutoLayout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = P002_GuessTheFlag.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A1385CA22E5FC9800D39536 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1A1385CC22E5FC9800D39536 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		1A1385CF22E5FC9800D39536 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -38,7 +38,7 @@
 		1A1385BE22E5FC9800D39536 = {
 			isa = PBXGroup;
 			children = (
-				1A1385C922E5FC9800D39536 /* P002_GuessTheFlag */,
+				1A1385C922E5FC9800D39536 /* P006A_AutoLayout */,
 				1A1385C822E5FC9800D39536 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -46,12 +46,12 @@
 		1A1385C822E5FC9800D39536 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1A1385C722E5FC9800D39536 /* P002_GuessTheFlag.app */,
+				1A1385C722E5FC9800D39536 /* P006A_AutoLayout.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		1A1385C922E5FC9800D39536 /* P002_GuessTheFlag */ = {
+		1A1385C922E5FC9800D39536 /* P006A_AutoLayout */ = {
 			isa = PBXGroup;
 			children = (
 				1A1385CA22E5FC9800D39536 /* AppDelegate.swift */,
@@ -61,15 +61,15 @@
 				1A1385D322E5FC9900D39536 /* LaunchScreen.storyboard */,
 				1A1385D622E5FC9900D39536 /* Info.plist */,
 			);
-			path = P002_GuessTheFlag;
+			path = P006A_AutoLayout;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1A1385C622E5FC9800D39536 /* P002_GuessTheFlag */ = {
+		1A1385C622E5FC9800D39536 /* P006A_AutoLayout */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1A1385D922E5FC9900D39536 /* Build configuration list for PBXNativeTarget "P002_GuessTheFlag" */;
+			buildConfigurationList = 1A1385D922E5FC9900D39536 /* Build configuration list for PBXNativeTarget "P006A_AutoLayout" */;
 			buildPhases = (
 				1A1385C322E5FC9800D39536 /* Sources */,
 				1A1385C422E5FC9800D39536 /* Frameworks */,
@@ -79,9 +79,9 @@
 			);
 			dependencies = (
 			);
-			name = P002_GuessTheFlag;
-			productName = P002_GuessTheFlag;
-			productReference = 1A1385C722E5FC9800D39536 /* P002_GuessTheFlag.app */;
+			name = P006A_AutoLayout;
+			productName = P006A_AutoLayout;
+			productReference = 1A1385C722E5FC9800D39536 /* P006A_AutoLayout.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -99,7 +99,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 1A1385C222E5FC9800D39536 /* Build configuration list for PBXProject "P002_GuessTheFlag" */;
+			buildConfigurationList = 1A1385C222E5FC9800D39536 /* Build configuration list for PBXProject "P006A_AutoLayout" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -112,7 +112,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1A1385C622E5FC9800D39536 /* P002_GuessTheFlag */,
+				1A1385C622E5FC9800D39536 /* P006A_AutoLayout */,
 			);
 		};
 /* End PBXProject section */
@@ -284,7 +284,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2E99BVWU5T;
-				INFOPLIST_FILE = P002_GuessTheFlag/Info.plist;
+				INFOPLIST_FILE = P006A_AutoLayout/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -302,7 +302,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2E99BVWU5T;
-				INFOPLIST_FILE = P002_GuessTheFlag/Info.plist;
+				INFOPLIST_FILE = P006A_AutoLayout/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -317,7 +317,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1A1385C222E5FC9800D39536 /* Build configuration list for PBXProject "P002_GuessTheFlag" */ = {
+		1A1385C222E5FC9800D39536 /* Build configuration list for PBXProject "P006A_AutoLayout" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1A1385D722E5FC9900D39536 /* Debug */,
@@ -326,7 +326,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1A1385D922E5FC9900D39536 /* Build configuration list for PBXNativeTarget "P002_GuessTheFlag" */ = {
+		1A1385D922E5FC9900D39536 /* Build configuration list for PBXNativeTarget "P006A_AutoLayout" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1A1385DA22E5FC9900D39536 /* Debug */,

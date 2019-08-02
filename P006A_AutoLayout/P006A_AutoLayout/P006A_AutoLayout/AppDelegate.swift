@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  P002_GuessTheFlag
+//  P006A_AutoLayout
 //
 //  Created by Alexey Ozerov on 22/07/2019.
 //  Copyright © 2019 Alexey Ozerov. All rights reserved.
