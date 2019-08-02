@@ -72,7 +72,7 @@ class TableViewController: UITableViewController {
 
                     return
                 } else {
-                    errorTitle = "Word not recognised"
+                    errorTitle = "Word not recognised or too short (< 3 letters)"
                     errorMessage = "You can't just make them up, you know!"
                 }
             } else {
@@ -116,6 +116,11 @@ class TableViewController: UITableViewController {
     }
 
     func isReal(word: String) -> Bool {
+
+        if word.utf16.count < 3 || (title?.hasPrefix(word))! {
+            return false
+        }
+
         let checker = UITextChecker()
         let range = NSRange(location: 0, length: word.utf16.count)
         let misspelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
