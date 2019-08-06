@@ -15,13 +15,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1A1385C722E5FC9800D39536 /* P006A_AutoLayout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = P002_GuessTheFlag.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A1385C722E5FC9800D39536 /* P006A_AutoLayout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = P006A_AutoLayout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A1385CA22E5FC9800D39536 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1A1385CC22E5FC9800D39536 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		1A1385CF22E5FC9800D39536 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1A1385D122E5FC9900D39536 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1A1385D422E5FC9900D39536 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1A1385D622E5FC9900D39536 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1A4CB62822FA22CB00BD96A5 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +39,7 @@
 		1A1385BE22E5FC9800D39536 = {
 			isa = PBXGroup;
 			children = (
+				1A4CB62822FA22CB00BD96A5 /* README.md */,
 				1A1385C922E5FC9800D39536 /* P006A_AutoLayout */,
 				1A1385C822E5FC9800D39536 /* Products */,
 			);

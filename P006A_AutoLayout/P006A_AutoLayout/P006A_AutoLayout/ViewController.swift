@@ -81,9 +81,9 @@ final class ViewController: UIViewController {
             NSAttributedString.Key.foregroundColor: score >= 0 ? UIColor.green : UIColor.red
         ]
 
-        let prefixNormText = "Score\t"
+        let prefixNormText = "Score\t\t"
         let scoreBoldText = NSMutableAttributedString(string: String(score), attributes: boldAttrs)
-        let postfixNormText = "\nQuestion\t\(answeredQuestions) of \(maxQuestions)"
+        let postfixNormText = "\nAnswered\t\(answeredQuestions) of \(maxQuestions)"
 
         let attributedString = NSMutableAttributedString(string: prefixNormText)
         attributedString.append(scoreBoldText)
