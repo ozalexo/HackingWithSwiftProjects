@@ -65,6 +65,8 @@ class ViewController: UIViewController {
             "label4": label4,
             "label5": label5
         ]
+
+        // Horizontal constraints
         for label in viewsDictionary.keys {
             // VFL generates multiple constraints at a time
             view.addConstraints( NSLayoutConstraint.constraints(
@@ -78,6 +80,9 @@ class ViewController: UIViewController {
                 views: viewsDictionary)
             )
         }
+
+        // Vertical constraints
+        let metrics = ["labelHeight": 88, "bottomEdge": 10]
         view.addConstraints(NSLayoutConstraint.constraints(
             // V:         vertical constraints.
             // -          means "space". It's 10 points by default (customizable)
@@ -85,9 +90,9 @@ class ViewController: UIViewController {
             // -(>=10)-|  last label must be at least 10 points away from the bottom of the view controller's view
             // ==         exactly equal
             // >=         greater than or equal to
-            withVisualFormat: "V:|[label1(==88)]-[label2(==88)]-[label3(==88)]-[label4(==88)]-[label5(==88)]-(>=10)-|",
+            withVisualFormat: "V:|[label1(labelHeight)]-[label2(labelHeight)]-[label3(labelHeight)]-[label4(labelHeight)]-[label5(labelHeight)]-(>=bottomEdge)-|",
             options: [],
-            metrics: nil,
+            metrics: metrics,
             views: viewsDictionary)
         )
     }
