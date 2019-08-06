@@ -12,6 +12,7 @@ Improve project "P002 Guess The Flag" with Autolayout
 ## Changelog
 
 * Renamed project `P002_GuessTheFlag` to `P006A_AutoLayout`
+* Flags are resized in landscape layout
 
 
 
