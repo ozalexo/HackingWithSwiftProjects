@@ -55,6 +55,37 @@ class ViewController: UIViewController {
         view.addSubview(label3)
         view.addSubview(label4)
         view.addSubview(label5)
+
+        // MARK: - Auto Layout Visual Format Language (VFL)
+
+        let viewsDictionary = [
+            "label1": label1,
+            "label2": label2,
+            "label3": label3,
+            "label4": label4,
+            "label5": label5
+        ]
+        for label in viewsDictionary.keys {
+            // VFL generates multiple constraints at a time
+            view.addConstraints( NSLayoutConstraint.constraints(
+                // H: - horizontal constraints.
+                // | - the edge of the view controller
+                // [ - left edge of the view
+                // ] - right edge of the view
+                withVisualFormat: "H:|[\(label)]|",
+                options: [],
+                metrics: nil,
+                views: viewsDictionary)
+            )
+        }
+        view.addConstraints(NSLayoutConstraint.constraints(
+            // V: - vertical constraints.
+            // - means "space". It's 10 points by default (customizable)
+            withVisualFormat: "V:|[label1]-[label2]-[label3]-[label4]-[label5]",
+            options: [],
+            metrics: nil,
+            views: viewsDictionary)
+        )
     }
 
 
