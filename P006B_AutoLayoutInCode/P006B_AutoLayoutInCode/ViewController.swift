@@ -90,7 +90,8 @@ class ViewController: UIViewController {
             // -(>=10)-|  last label must be at least 10 points away from the bottom of the view controller's view
             // ==         exactly equal
             // >=         greater than or equal to
-            withVisualFormat: "V:|[label1(labelHeight)]-[label2(labelHeight)]-[label3(labelHeight)]-[label4(labelHeight)]-[label5(labelHeight)]-(>=bottomEdge)-|",
+            // @999       constraint's priority. 1000 - this is absolutely required, 999 is very important, but not required
+            withVisualFormat: "V:|[label1(labelHeight@999)]-[label2(labelHeight)]-[label3(labelHeight)]-[label4(labelHeight)]-[label5(labelHeight)]-(>=bottomEdge)-|",
             options: [],
             metrics: metrics,
             views: viewsDictionary)
