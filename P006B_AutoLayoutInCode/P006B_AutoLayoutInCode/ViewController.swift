@@ -104,7 +104,8 @@ class ViewController: UIViewController {
         var previous: UILabel?
 
         for label in [label1, label2, label3, label4, label5] {
-            label.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+            label.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+            label.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
             label.heightAnchor.constraint(equalToConstant: 88).isActive = true
 
             if let previous = previous {
@@ -114,8 +115,6 @@ class ViewController: UIViewController {
                 // this is the first label
                 label.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
             }
-            label.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
-            label.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
             // set the previous label to be the current one, for the next loop iteration
             previous = label
         }
