@@ -56,6 +56,7 @@ class ViewController: UIViewController {
         view.addSubview(label4)
         view.addSubview(label5)
 
+        /*
         // MARK: - Auto Layout Visual Format Language (VFL)
 
         let viewsDictionary = [
@@ -96,6 +97,28 @@ class ViewController: UIViewController {
             metrics: metrics,
             views: viewsDictionary)
         )
+        */
+
+        // MARK: - Auto Layout VFL and Anchors
+
+        var previous: UILabel?
+
+        for label in [label1, label2, label3, label4, label5] {
+            label.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+            label.heightAnchor.constraint(equalToConstant: 88).isActive = true
+
+            if let previous = previous {
+                // we have a previous label – create a height constraint
+                label.topAnchor.constraint(equalTo: previous.bottomAnchor, constant: 10).isActive = true
+            } else {
+                // this is the first label
+                label.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
+            }
+            label.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
+            label.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
+            // set the previous label to be the current one, for the next loop iteration
+            previous = label
+        }
     }
 
 
