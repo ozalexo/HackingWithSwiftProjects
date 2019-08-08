@@ -13,6 +13,17 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Let's use 'background' subview to set a color for SafeArea only
+        // Just want to see top/bottom gaps if they appear
+        let background = UIView()
+        background.translatesAutoresizingMaskIntoConstraints = false
+        background.backgroundColor = .gray
+        view.addSubview(background)
+        background.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        background.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        background.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        background.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+
         let label1 = UILabel()
 
         /**
@@ -50,11 +61,25 @@ class ViewController: UIViewController {
         label5.text = "LABELS"
         label5.sizeToFit()
 
-        view.addSubview(label1)
-        view.addSubview(label2)
-        view.addSubview(label3)
-        view.addSubview(label4)
-        view.addSubview(label5)
+        let label6 = UILabel()
+        label6.translatesAutoresizingMaskIntoConstraints = false
+        label6.backgroundColor = UIColor.purple
+        label6.text = "SIX"
+        label6.sizeToFit()
+
+        let label7 = UILabel()
+        label7.translatesAutoresizingMaskIntoConstraints = false
+        label7.backgroundColor = UIColor.brown
+        label7.text = "SEVEN"
+        label7.sizeToFit()
+
+        background.addSubview(label1)
+        background.addSubview(label2)
+        background.addSubview(label3)
+        background.addSubview(label4)
+        background.addSubview(label5)
+        background.addSubview(label6)
+        background.addSubview(label7)
 
         /*
         // MARK: - Auto Layout Visual Format Language (VFL)
@@ -103,17 +128,38 @@ class ViewController: UIViewController {
 
         var previous: UILabel?
 
-        for label in [label1, label2, label3, label4, label5] {
+        let labelsList = [label1, label2, label3, label4, label5, label6, label7]
+
+        // Here we need to calculate heigth for the first label (all other will use 'previous.heightAnchor' in heightAnchor)
+        let labelsCount = labelsList.count
+        let gapHeight = 10 // vertical spacing berween Labels
+        // Dynamically calculated multiplier for heightAnchor
+        let HAMultuplier: CGFloat = 1 / CGFloat(labelsCount)
+        // Dynamically calculated constant for heightAnchor
+        // Pay your attention: it is negative. So it will be subtracted from label's height, calculated by heigthAnchor and multiplier
+        let HAConstant = -CGFloat((labelsCount - 1) * gapHeight / labelsCount)
+
+        // Note: for original project with 5 labels we need HAMultuplier = 0.2 and HAConstant = -8
+
+        /*
+        // Debug prints
+        print("\n\nThere are \(labelsList.count) labels")
+        print("Calculated multiplier:", HAMultuplier)
+        print("Calculated constant:", HAConstant, "\n\n")
+        */
+
+        for label in labelsList {
             label.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
             label.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-            label.heightAnchor.constraint(equalToConstant: 88).isActive = true
 
             if let previous = previous {
                 // we have a previous label – create a height constraint
-                label.topAnchor.constraint(equalTo: previous.bottomAnchor, constant: 10).isActive = true
+                label.topAnchor.constraint(equalTo: previous.bottomAnchor, constant: CGFloat(gapHeight)).isActive = true
+                label.heightAnchor.constraint(equalTo: previous.heightAnchor).isActive = true
             } else {
                 // this is the first label
                 label.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
+                label.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, multiplier: HAMultuplier, constant: HAConstant).isActive = true
             }
             // set the previous label to be the current one, for the next loop iteration
             previous = label
