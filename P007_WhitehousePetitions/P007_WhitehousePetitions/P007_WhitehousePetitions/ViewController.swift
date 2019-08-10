@@ -26,8 +26,11 @@ class ViewController: UITableViewController {
         if let url = URL(string: urlString) {
             if let data = try? Data(contentsOf: url) {
                 parse(json: data)
+                return
             }
         }
+
+        showError()
     }
 
     func parse(json: Data) {
@@ -37,6 +40,17 @@ class ViewController: UITableViewController {
             petitions = jsonPetitions.results
             tableView.reloadData()
         }
+    }
+
+    func showError() {
+        let ac = UIAlertController(title: "Loading error", message: "There was a problem loading the feed; please check your connection and try again", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+
+        // For the iPads: centered alert popup
+        ac.popoverPresentationController?.sourceView = self.view
+        ac.popoverPresentationController?.sourceRect = self.view.frame
+
+        present(ac, animated: true)
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
