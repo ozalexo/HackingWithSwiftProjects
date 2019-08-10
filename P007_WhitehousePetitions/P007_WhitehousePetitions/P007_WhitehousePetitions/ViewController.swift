@@ -26,11 +26,21 @@ class ViewController: UITableViewController {
         if let url = URL(string: urlString) {
             if let data = try? Data(contentsOf: url) {
                 parse(json: data)
+                setupToolBar()
                 return
             }
         }
 
         showError()
+    }
+
+    func setupToolBar() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "Credits",
+            style: .plain,
+            target: self,
+            action: #selector(showCredits)
+        )
     }
 
     func parse(json: Data) {
@@ -40,6 +50,17 @@ class ViewController: UITableViewController {
             petitions = jsonPetitions.results
             tableView.reloadData()
         }
+    }
+
+    @objc func showCredits() {
+        let ac = UIAlertController(title: "Info", message: "Data comes from the We The People API of the Whitehouse", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+
+        // For the iPads: centered alert popup
+        ac.popoverPresentationController?.sourceView = self.view
+        ac.popoverPresentationController?.sourceRect = self.view.frame
+
+        present(ac, animated: true)
     }
 
     func showError() {
