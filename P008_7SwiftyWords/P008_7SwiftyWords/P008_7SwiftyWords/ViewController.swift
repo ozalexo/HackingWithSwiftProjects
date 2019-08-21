@@ -17,6 +17,8 @@ class ViewController: UIViewController {
     var letterButtons = [UIButton]()
 
     override func loadView() {
+
+        // MARK: - Views
         view = UIView()
         view.backgroundColor = .white
 
@@ -55,16 +57,25 @@ class ViewController: UIViewController {
         let submit = UIButton(type: .system)
         submit.translatesAutoresizingMaskIntoConstraints = false
         submit.setTitle("SUBMIT", for: .normal)
+        submit.addTarget(self, action: #selector(submitTapped), for: .touchUpInside)
         view.addSubview(submit)
 
         let clear = UIButton(type: .system)
         clear.translatesAutoresizingMaskIntoConstraints = false
         clear.setTitle("CLEAR", for: .normal)
+        clear.addTarget(self, action: #selector(clearTapped), for: .touchUpInside)
         view.addSubview(clear)
 
         let buttonsView = UIView()
         buttonsView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(buttonsView)
+
+        // MARK: - Levels and scores
+        var activatedButtons = [UIButton]()
+        var solutions = [String]()
+
+        var score = 0
+        var level = 1
 
         // MARK: - Score Label's Constrains
         let scoreLabelConstrains = [
@@ -159,6 +170,9 @@ class ViewController: UIViewController {
                 let frame = CGRect(x: col * width, y: row * height, width: width, height: height)
                 letterButton.frame = frame
 
+                // pressing button reaction
+                letterButton.addTarget(self, action: #selector(letterTapped), for: .touchUpInside)
+
                 // add it to the buttons view
                 buttonsView.addSubview(letterButton)
 
@@ -166,6 +180,15 @@ class ViewController: UIViewController {
                 letterButtons.append(letterButton)
             }
         }
+    }
+
+    @objc func letterTapped(_ sender: UIButton) {
+    }
+
+    @objc func submitTapped(_ sender: UIButton) {
+    }
+
+    @objc func clearTapped(_ sender: UIButton) {
     }
 
     override func viewDidLoad() {
