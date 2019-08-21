@@ -16,9 +16,15 @@ class ViewController: UIViewController {
     var scoreLabel: UILabel!
     var letterButtons = [UIButton]()
 
+    var activatedButtons = [UIButton]()
+    var solutions = [String]()
+
+    var score = 0
+    var level = 1
+
     override func loadView() {
 
-        // MARK: - Views
+        // MARK: - Components
         view = UIView()
         view.backgroundColor = .white
 
@@ -69,13 +75,6 @@ class ViewController: UIViewController {
         let buttonsView = UIView()
         buttonsView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(buttonsView)
-
-        // MARK: - Levels and scores
-        var activatedButtons = [UIButton]()
-        var solutions = [String]()
-
-        var score = 0
-        var level = 1
 
         // MARK: - Score Label's Constrains
         let scoreLabelConstrains = [
@@ -189,6 +188,37 @@ class ViewController: UIViewController {
     }
 
     @objc func clearTapped(_ sender: UIButton) {
+    }
+
+    // MARK: - Loading levels
+    func loadLevel() {
+        var clueString = ""
+        var solutionString = ""
+        var letterBits = [String]()
+
+        if let levelFileURL = Bundle.main.url(forResource: "level\(level)", withExtension: "txt") {
+            if let levelContents = try? String(contentsOf: levelFileURL) {
+                var lines = levelContents.components(separatedBy: "\n")
+                lines.shuffle()
+
+                for (index, line) in lines.enumerated() {
+                    let parts = line.components(separatedBy: ": ")
+                    let answer = parts[0]
+                    let clue = parts[1]
+
+                    clueString += "\(index + 1). \(clue)\n"
+
+                    let solutionWord = answer.replacingOccurrences(of: "|", with: "")
+                    solutionString += "\(solutionWord.count) letters\n"
+                    solutions.append(solutionWord)
+
+                    let bits = answer.components(separatedBy: "|")
+                    letterBits += bits
+                }
+            }
+        }
+
+        // Now configure the buttons and labels
     }
 
     override func viewDidLoad() {
