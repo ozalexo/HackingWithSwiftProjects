@@ -91,8 +91,6 @@ class ViewController: UIViewController, WKNavigationDelegate {
     func displayNotAllowedAlert (host: String) {
         let ac = UIAlertController(title: "Host does not allowed", message: "\(host) is out of allowed hosts list", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Ok", style: .cancel))
-        ac.popoverPresentationController?.sourceView = self.view
-        ac.popoverPresentationController?.sourceRect = self.view.frame
         present(ac, animated: true)
     }
 
