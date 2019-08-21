@@ -220,6 +220,17 @@ class ViewController: UIViewController {
         activatedButtons.removeAll()
     }
 
+    func levelUp(action: UIAlertAction) {
+        level += 1
+        solutions.removeAll(keepingCapacity: true)
+
+        loadLevel()
+
+        for btn in letterButtons {
+            btn.isHidden = false
+        }
+    }
+
     // MARK: - Loading levels
     func loadLevel() {
         var clueString = ""
