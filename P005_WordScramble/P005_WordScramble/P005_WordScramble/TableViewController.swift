@@ -50,10 +50,6 @@ class TableViewController: UITableViewController {
 
         ac.addAction(submitAction)
 
-        // For the iPads: centered alert popup
-        ac.popoverPresentationController?.sourceView = self.view
-        ac.popoverPresentationController?.sourceRect = self.view.frame
-
         present(ac, animated: true)
     }
 
@@ -93,10 +89,6 @@ class TableViewController: UITableViewController {
 
     func showErrorMessage(errorTitle: String, errorMessage: String) {
         let ac = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: .alert)
-
-        // For the iPads: centered alert popup
-        ac.popoverPresentationController?.sourceView = self.view
-        ac.popoverPresentationController?.sourceRect = self.view.frame
 
         ac.addAction(UIAlertAction(title: "OK", style: .default))
         present(ac, animated: true)
