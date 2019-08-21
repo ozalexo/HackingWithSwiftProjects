@@ -76,10 +76,6 @@ class ViewController: UITableViewController {
 
         ac.addAction(searchAction)
 
-        // For the iPads: centered alert popup
-        ac.popoverPresentationController?.sourceView = self.view
-        ac.popoverPresentationController?.sourceRect = self.view.frame
-
         present(ac, animated: true)
     }
 
@@ -108,9 +104,6 @@ class ViewController: UITableViewController {
         } else {
             let ac = UIAlertController(title: "Nothing found", message: nil, preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            // For the iPads: centered alert popup
-            ac.popoverPresentationController?.sourceView = self.view
-            ac.popoverPresentationController?.sourceRect = self.view.frame
 
             present(ac, animated: true)
         }
@@ -120,20 +113,12 @@ class ViewController: UITableViewController {
         let ac = UIAlertController(title: "Info", message: "Data comes from the We The People API of the Whitehouse", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
 
-        // For the iPads: centered alert popup
-        ac.popoverPresentationController?.sourceView = self.view
-        ac.popoverPresentationController?.sourceRect = self.view.frame
-
         present(ac, animated: true)
     }
 
     func showError() {
         let ac = UIAlertController(title: "Loading error", message: "There was a problem loading the feed; please check your connection and try again", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-
-        // For the iPads: centered alert popup
-        ac.popoverPresentationController?.sourceView = self.view
-        ac.popoverPresentationController?.sourceRect = self.view.frame
 
         present(ac, animated: true)
     }
