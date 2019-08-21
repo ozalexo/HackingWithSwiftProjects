@@ -27,13 +27,16 @@ class ViewController: UIViewController {
         view.addSubview(scoreLabel)
 
         cluesLabel = UILabel()
+        cluesLabel.setContentHuggingPriority(UILayoutPriority(1), for: .vertical)
         cluesLabel.translatesAutoresizingMaskIntoConstraints = false
         cluesLabel.font = UIFont.systemFont(ofSize: 24)
         cluesLabel.text = "CLUES"
         cluesLabel.numberOfLines = 0
+        
         view.addSubview(cluesLabel)
 
         answersLabel = UILabel()
+        answersLabel.setContentHuggingPriority(UILayoutPriority(1), for: .vertical)
         answersLabel.translatesAutoresizingMaskIntoConstraints = false
         answersLabel.font = UIFont.systemFont(ofSize: 24)
         answersLabel.text = "ANSWERS"
@@ -59,6 +62,10 @@ class ViewController: UIViewController {
         clear.setTitle("CLEAR", for: .normal)
         view.addSubview(clear)
 
+        let buttonsView = UIView()
+        buttonsView.translatesAutoresizingMaskIntoConstraints = false
+        buttonsView.backgroundColor = .green
+        view.addSubview(buttonsView)
 
         // MARK: - Score Label's Constrains
         let scoreLabelConstrains = [
@@ -114,6 +121,15 @@ class ViewController: UIViewController {
             clear.heightAnchor.constraint(equalToConstant: 44),
         ]
 
+        // MARK: - Buttons View's Constrains
+        let buttonsViewConstraints = [
+            buttonsView.widthAnchor.constraint(equalToConstant: 750),
+            buttonsView.heightAnchor.constraint(equalToConstant: 320),
+            buttonsView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            buttonsView.topAnchor.constraint(equalTo: submit.bottomAnchor, constant: 20),
+            buttonsView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -20),
+        ]
+
         let allConstrains = [
             scoreLabelConstrains,
             cluesLabelConstrains,
@@ -121,6 +137,7 @@ class ViewController: UIViewController {
             currentAnswerLabelConstrains,
             submitButtonConstraints,
             clearButtonConstraints,
+            buttonsViewConstraints,
         ].flatMap({ $0 })
 
         NSLayoutConstraint.activate(allConstrains)
