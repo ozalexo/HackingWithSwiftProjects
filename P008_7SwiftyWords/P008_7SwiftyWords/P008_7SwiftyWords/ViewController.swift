@@ -41,10 +41,14 @@ class ViewController: UIViewController {
         answersLabel.textAlignment = .right
         view.addSubview(answersLabel)
 
-        NSLayoutConstraint.activate([
+        // MARK: - Score Label's Constrains
+        let scoreLabelConstrains = [
             scoreLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
             scoreLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
+        ]
 
+        // MARK: - Clues Label's Constrains
+        let cluesLabelConstrains = [
             // pin the top of the clues label to the bottom of the score label
             cluesLabel.topAnchor.constraint(equalTo: scoreLabel.bottomAnchor),
 
@@ -53,7 +57,10 @@ class ViewController: UIViewController {
 
             // make the clues label 60% of the width of our layout margins, minus 100
             cluesLabel.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor, multiplier: 0.6, constant: -100),
+        ]
 
+        // MARK: - Answers Label's Constrains
+        let answersLabelConstrains = [
             // also pin the top of the answers label to the bottom of the score label
             answersLabel.topAnchor.constraint(equalTo: scoreLabel.bottomAnchor),
 
@@ -65,7 +72,11 @@ class ViewController: UIViewController {
 
             // make the answers label match the height of the clues label
             answersLabel.heightAnchor.constraint(equalTo: cluesLabel.heightAnchor),
-        ])
+        ]
+
+        let allConstrains = [scoreLabelConstrains, cluesLabelConstrains, answersLabelConstrains].flatMap({ $0 })
+
+        NSLayoutConstraint.activate(allConstrains)
     }
 
     override func viewDidLoad() {
