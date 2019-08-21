@@ -41,6 +41,14 @@ class ViewController: UIViewController {
         answersLabel.textAlignment = .right
         view.addSubview(answersLabel)
 
+        currentAnswer = UITextField()
+        currentAnswer.translatesAutoresizingMaskIntoConstraints = false
+        currentAnswer.placeholder = "Tap letters to guess"
+        currentAnswer.textAlignment = .center
+        currentAnswer.font = UIFont.systemFont(ofSize: 44)
+        currentAnswer.isUserInteractionEnabled = false
+        view.addSubview(currentAnswer)
+
         // MARK: - Score Label's Constrains
         let scoreLabelConstrains = [
             scoreLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
@@ -74,7 +82,19 @@ class ViewController: UIViewController {
             answersLabel.heightAnchor.constraint(equalTo: cluesLabel.heightAnchor),
         ]
 
-        let allConstrains = [scoreLabelConstrains, cluesLabelConstrains, answersLabelConstrains].flatMap({ $0 })
+        // MARK: - Current Answer Label's Constrains
+        let currentAnswerLabelConstrains = [
+            currentAnswer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            currentAnswer.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
+            currentAnswer.topAnchor.constraint(equalTo: cluesLabel.bottomAnchor, constant: 20),
+        ]
+
+        let allConstrains = [
+            scoreLabelConstrains,
+            cluesLabelConstrains,
+            answersLabelConstrains,
+            currentAnswerLabelConstrains,
+        ].flatMap({ $0 })
 
         NSLayoutConstraint.activate(allConstrains)
     }
