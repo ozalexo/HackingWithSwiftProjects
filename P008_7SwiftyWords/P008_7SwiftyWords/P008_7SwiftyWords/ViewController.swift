@@ -78,6 +78,9 @@ class ViewController: UIViewController {
 
         let buttonsView = UIView()
         buttonsView.translatesAutoresizingMaskIntoConstraints = false
+        // set gray border around buttons
+        buttonsView.layer.borderColor = UIColor.lightGray.cgColor
+        buttonsView.layer.borderWidth = 1
         view.addSubview(buttonsView)
 
         // MARK: - Score Label's Constrains
