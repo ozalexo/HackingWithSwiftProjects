@@ -214,10 +214,16 @@ class ViewController: UIViewController {
                 ac.addAction(UIAlertAction(title: "Let's go!", style: .default, handler: levelUp))
                 present(ac, animated: true)
             }
+        } else {
+            let ac = UIAlertController(title: "Incorrect answer!", message: "Please try again", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Ok", style: .default, handler: clearCurrentAnswer))
+            present(ac, animated: true)
         }
     }
 
-    @objc func clearTapped(_ sender: UIButton) {
+
+
+    func clearCurrentAnswer (action: UIAlertAction! = nil) {
         currentAnswer.text = ""
 
         for btn in activatedButtons {
@@ -225,6 +231,10 @@ class ViewController: UIViewController {
         }
 
         activatedButtons.removeAll()
+    }
+
+    @objc func clearTapped(_ sender: UIButton) {
+        clearCurrentAnswer()
     }
 
     func levelUp(action: UIAlertAction) {
