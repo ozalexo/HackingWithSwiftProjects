@@ -49,6 +49,17 @@ class ViewController: UIViewController {
         currentAnswer.isUserInteractionEnabled = false
         view.addSubview(currentAnswer)
 
+        let submit = UIButton(type: .system)
+        submit.translatesAutoresizingMaskIntoConstraints = false
+        submit.setTitle("SUBMIT", for: .normal)
+        view.addSubview(submit)
+
+        let clear = UIButton(type: .system)
+        clear.translatesAutoresizingMaskIntoConstraints = false
+        clear.setTitle("CLEAR", for: .normal)
+        view.addSubview(clear)
+
+
         // MARK: - Score Label's Constrains
         let scoreLabelConstrains = [
             scoreLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
@@ -89,11 +100,27 @@ class ViewController: UIViewController {
             currentAnswer.topAnchor.constraint(equalTo: cluesLabel.bottomAnchor, constant: 20),
         ]
 
+        // MARK: - Submit Button's Constrains
+        let submitButtonConstraints = [
+            submit.topAnchor.constraint(equalTo: currentAnswer.bottomAnchor),
+            submit.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -100),
+            submit.heightAnchor.constraint(equalToConstant: 44),
+        ]
+
+        // MARK: - Clear Button's Constrains
+        let clearButtonConstraints = [
+            clear.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 100),
+            clear.centerYAnchor.constraint(equalTo: submit.centerYAnchor),
+            clear.heightAnchor.constraint(equalToConstant: 44),
+        ]
+
         let allConstrains = [
             scoreLabelConstrains,
             cluesLabelConstrains,
             answersLabelConstrains,
             currentAnswerLabelConstrains,
+            submitButtonConstraints,
+            clearButtonConstraints,
         ].flatMap({ $0 })
 
         NSLayoutConstraint.activate(allConstrains)
