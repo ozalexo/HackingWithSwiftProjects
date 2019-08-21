@@ -198,7 +198,7 @@ class ViewController: UIViewController {
 
         if let levelFileURL = Bundle.main.url(forResource: "level\(level)", withExtension: "txt") {
             if let levelContents = try? String(contentsOf: levelFileURL) {
-                var lines = levelContents.components(separatedBy: "\n")
+                var lines = levelContents.components(separatedBy: .newlines)
                 lines.shuffle()
 
                 for (index, line) in lines.enumerated() {
@@ -219,11 +219,22 @@ class ViewController: UIViewController {
         }
 
         // Now configure the buttons and labels
+        cluesLabel.text = clueString.trimmingCharacters(in: .whitespacesAndNewlines)
+        answersLabel.text = solutionString.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        letterBits.shuffle()
+
+        if letterBits.count == letterButtons.count {
+            for i in 0 ..< letterButtons.count {
+                letterButtons[i].setTitle(letterBits[i], for: .normal)
+            }
+        }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+
+        loadLevel()
     }
 
 
