@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     var answersLabel: UILabel!
     var currentAnswer: UITextField!
     var scoreLabel: UILabel!
+    var attemptsLabel: UILabel!
     var letterButtons = [UIButton]()
 
     var activatedButtons = [UIButton]()
@@ -24,13 +25,30 @@ class ViewController: UIViewController {
             scoreLabel.text = "Score: \(score)"
         }
     }
+    let maxAttempts = 10
+    var attemptsRemaining: Int {
+        didSet {
+            attemptsLabel.text = "Attempts remaining: \(attemptsRemaining)"
+        }
+    }
     var level = 1
+
+    required init?(coder aDecoder: NSCoder) {
+        self.attemptsRemaining = maxAttempts
+        super.init(coder: aDecoder)
+    }
 
     override func loadView() {
 
         // MARK: - Components
         view = UIView()
         view.backgroundColor = .white
+
+        attemptsLabel = UILabel()
+        attemptsLabel.translatesAutoresizingMaskIntoConstraints = false
+        attemptsLabel.textAlignment = .left
+        attemptsLabel.text = "Attempts remaining: \(self.attemptsRemaining)"
+        view.addSubview(attemptsLabel)
 
         scoreLabel = UILabel()
         scoreLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -82,6 +100,12 @@ class ViewController: UIViewController {
         buttonsView.layer.borderColor = UIColor.lightGray.cgColor
         buttonsView.layer.borderWidth = 1
         view.addSubview(buttonsView)
+
+        // MARK: - Attempts Label's Constrains
+        let attemptsLabelConstrains = [
+            attemptsLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
+            attemptsLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+        ]
 
         // MARK: - Score Label's Constrains
         let scoreLabelConstrains = [
@@ -147,6 +171,7 @@ class ViewController: UIViewController {
         ]
 
         let allConstrains = [
+            attemptsLabelConstrains,
             scoreLabelConstrains,
             cluesLabelConstrains,
             answersLabelConstrains,
@@ -199,6 +224,7 @@ class ViewController: UIViewController {
     @objc func submitTapped(_ sender: UIButton) {
         guard let answerText = currentAnswer.text else { return }
 
+        attemptsRemaining -= 1
         if let solutionPosition = solutions.firstIndex(of: answerText) {
             activatedButtons.removeAll()
 
@@ -215,7 +241,8 @@ class ViewController: UIViewController {
                 present(ac, animated: true)
             }
         } else {
-            let ac = UIAlertController(title: "Incorrect answer!", message: "Please try again", preferredStyle: .alert)
+            score -= 1
+            let ac = UIAlertController(title: "Incorrect answer", message: "You loose a score", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "Ok", style: .default, handler: clearCurrentAnswer))
             present(ac, animated: true)
         }
@@ -240,6 +267,7 @@ class ViewController: UIViewController {
     func levelUp(action: UIAlertAction) {
         level += 1
         solutions.removeAll(keepingCapacity: true)
+        attemptsRemaining = maxAttempts
 
         loadLevel()
 
