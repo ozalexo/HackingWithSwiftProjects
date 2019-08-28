@@ -10,32 +10,30 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    // MARK: - Properties
     var cluesLabel: UILabel!
     var answersLabel: UILabel!
     var currentAnswer: UITextField!
     var scoreLabel: UILabel!
     var attemptsLabel: UILabel!
     var letterButtons = [UIButton]()
-
     var activatedButtons = [UIButton]()
-    var solutions = [String]()
 
+    var solutions = [String]()
+    let allowMistakesAmount = 3
+    var level = 1
+
+    // MARK: - Observed properties
     var score = 0 {
         didSet {
             scoreLabel.text = "Score: \(score)"
         }
     }
-    let maxAttempts = 10
-    var attemptsRemaining: Int {
+
+    var attemptsRemaining = 0 {
         didSet {
             attemptsLabel.text = "Attempts remaining: \(attemptsRemaining)"
         }
-    }
-    var level = 1
-
-    required init?(coder aDecoder: NSCoder) {
-        self.attemptsRemaining = maxAttempts
-        super.init(coder: aDecoder)
     }
 
     override func loadView() {
@@ -62,7 +60,6 @@ class ViewController: UIViewController {
         cluesLabel.font = UIFont.systemFont(ofSize: 24)
         cluesLabel.text = "CLUES"
         cluesLabel.numberOfLines = 0
-        
         view.addSubview(cluesLabel)
 
         answersLabel = UILabel()
@@ -85,13 +82,13 @@ class ViewController: UIViewController {
         let submit = UIButton(type: .system)
         submit.translatesAutoresizingMaskIntoConstraints = false
         submit.setTitle("SUBMIT", for: .normal)
-        submit.addTarget(self, action: #selector(submitTapped), for: .touchUpInside)
+        submit.addTarget(self, action: #selector(tappedSubmit), for: .touchUpInside)
         view.addSubview(submit)
 
         let clear = UIButton(type: .system)
         clear.translatesAutoresizingMaskIntoConstraints = false
         clear.setTitle("CLEAR", for: .normal)
-        clear.addTarget(self, action: #selector(clearTapped), for: .touchUpInside)
+        clear.addTarget(self, action: #selector(tappedClear), for: .touchUpInside)
         view.addSubview(clear)
 
         let buttonsView = UIView()
@@ -191,18 +188,16 @@ class ViewController: UIViewController {
         for row in 0..<4 {
             for col in 0..<5 {
                 // create a new button and give it a big font size
-                let letterButton = UIButton(type: .system)
+                let letterButton = UIButton(type: .custom)
                 letterButton.titleLabel?.font = UIFont.systemFont(ofSize: 36)
-
-                // give the button some temporary text so we can see it on-screen
-                letterButton.setTitle("WWW", for: .normal)
+                letterButton.setTitleColor(UIColor.systemBlue, for: UIControl.State())
 
                 // calculate the frame of this button using its column and row
                 let frame = CGRect(x: col * width, y: row * height, width: width, height: height)
                 letterButton.frame = frame
 
                 // pressing button reaction
-                letterButton.addTarget(self, action: #selector(letterTapped), for: .touchUpInside)
+                letterButton.addTarget(self, action: #selector(tappedLetterBit), for: .touchUpInside)
 
                 // add it to the buttons view
                 buttonsView.addSubview(letterButton)
@@ -214,43 +209,90 @@ class ViewController: UIViewController {
     }
 
     // MARK: - Handlers
-    @objc func letterTapped(_ sender: UIButton) {
+    @objc func tappedLetterBit(_ sender: UIButton) {
         guard let buttonTitle = sender.titleLabel?.text else { return }
         currentAnswer.text = currentAnswer.text?.appending(buttonTitle)
         activatedButtons.append(sender)
         sender.isHidden = true
     }
 
-    @objc func submitTapped(_ sender: UIButton) {
+    @objc func tappedSubmit(_ sender: UIButton) {
         guard let answerText = currentAnswer.text else { return }
 
         attemptsRemaining -= 1
+
         if let solutionPosition = solutions.firstIndex(of: answerText) {
-            activatedButtons.removeAll()
-
-            var splitAnswers = answersLabel.text?.components(separatedBy: .newlines)
-            splitAnswers?[solutionPosition] = answerText
-            answersLabel.text = splitAnswers?.joined(separator: "\n")
-
-            currentAnswer.text = ""
+            answerUpdate(at: solutionPosition, with: answerText)
             score += 1
-
-            if score % 7 == 0 {
-                let ac = UIAlertController(title: "Well done!", message: "Are you ready for the next level?", preferredStyle: .alert)
-                ac.addAction(UIAlertAction(title: "Let's go!", style: .default, handler: levelUp))
-                present(ac, animated: true)
-            }
+            gameCheckWinCondition(correct: true)
         } else {
             score -= 1
-            let ac = UIAlertController(title: "Incorrect answer", message: "You loose a score", preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "Ok", style: .default, handler: clearCurrentAnswer))
-            present(ac, animated: true)
+            gameCheckWinCondition(correct: false)
         }
     }
 
+    @objc func tappedClear(_ sender: UIButton) {
+        answerReset()
+    }
 
+    // MARK: - Alerts
+    func alertWin() {
+        let ac = UIAlertController(title: "Well done!", message: "Are you ready for the next level?", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Let's go!", style: .default, handler: levelUp))
+        present(ac, animated: true)
+    }
 
-    func clearCurrentAnswer (action: UIAlertAction! = nil) {
+    func alertReplay() {
+        let ac = UIAlertController(title: "Saddened by your failure", message: "Are you ready to try again?", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Let's go!", style: .default, handler: levelReset))
+        present(ac, animated: true)
+    }
+
+    func alertMistake() {
+        let ac = UIAlertController(title: "Incorrect answer", message: "You loose a score", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Ok", style: .default, handler: answerReset))
+        present(ac, animated: true)
+    }
+
+    func alertNewGame() {
+        let ac = UIAlertController(title: "It was last level", message: "Start game again", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Ok", style: .default, handler: gameRestart))
+        present(ac, animated: true)
+    }
+
+    // MARK: - Business logic methods
+    func gameCheckWinCondition(correct: Bool) {
+
+        // check absolute win condition (max scores or max scores - 1 with 0 or 2 remaining attempts)
+        let isAbsoluteWin: Bool = score == solutions.count || ((attemptsRemaining == 0 || attemptsRemaining == 2) && score == solutions.count - 1)
+        if isAbsoluteWin {
+            alertWin()
+            return
+        }
+
+        if attemptsRemaining != 0 {
+            if correct {
+                return
+            } else {
+                alertMistake()
+            }
+        } else {
+            // In all other conditions game failed
+            alertReplay()
+        }
+    }
+
+    func answerUpdate(at solutionPosition: Int, with answerText: String) {
+        activatedButtons.removeAll()
+
+        var splitAnswers = answersLabel.text?.components(separatedBy: .newlines)
+        splitAnswers?[solutionPosition] = answerText
+        answersLabel.text = splitAnswers?.joined(separator: "\n")
+
+        currentAnswer.text = ""
+    }
+
+    func answerReset (action: UIAlertAction! = nil) {
         currentAnswer.text = ""
 
         for btn in activatedButtons {
@@ -260,29 +302,33 @@ class ViewController: UIViewController {
         activatedButtons.removeAll()
     }
 
-    @objc func clearTapped(_ sender: UIButton) {
-        clearCurrentAnswer()
+    func levelReset(action: UIAlertAction! = nil) {
+        score = 0
+        solutions.removeAll(keepingCapacity: true)
+        currentAnswer.text = ""
+        levelLoad()
     }
 
-    func levelUp(action: UIAlertAction) {
+    func levelUp(action: UIAlertAction! = nil) {
         level += 1
-        solutions.removeAll(keepingCapacity: true)
-        attemptsRemaining = maxAttempts
-
-        loadLevel()
-
+        levelReset()
         for btn in letterButtons {
             btn.isHidden = false
         }
     }
 
-    // MARK: - Loading levels
-    func loadLevel() {
-        var clueString = ""
-        var solutionString = ""
-        var letterBits = [String]()
+    func gameRestart(action: UIAlertAction) {
+        level = 1
+        levelReset(action: action)
+    }
 
+    func levelLoad() {
         if let levelFileURL = Bundle.main.url(forResource: "level\(level)", withExtension: "txt") {
+
+            var clueString = ""
+            var solutionString = ""
+            var letterBits = [String]()
+
             if let levelContents = try? String(contentsOf: levelFileURL) {
                 var lines = levelContents.components(separatedBy: .newlines)
                 lines.shuffle()
@@ -301,26 +347,30 @@ class ViewController: UIViewController {
                     let bits = answer.components(separatedBy: "|")
                     letterBits += bits
                 }
+                // Let's allow to an user to make allowMistakesAmount (3) mistakes
+                attemptsRemaining = solutions.count + allowMistakesAmount
             }
-        }
 
-        // Now configure the buttons and labels
-        cluesLabel.text = clueString.trimmingCharacters(in: .whitespacesAndNewlines)
-        answersLabel.text = solutionString.trimmingCharacters(in: .whitespacesAndNewlines)
+            // Now configure the buttons and labels
+            cluesLabel.text = clueString.trimmingCharacters(in: .whitespacesAndNewlines)
+            answersLabel.text = solutionString.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        letterBits.shuffle()
+            letterBits.shuffle()
 
-        if letterBits.count == letterButtons.count {
-            for i in 0 ..< letterButtons.count {
-                letterButtons[i].setTitle(letterBits[i], for: .normal)
+            if letterBits.count == letterButtons.count {
+                for i in 0 ..< letterButtons.count {
+                    letterButtons[i].setTitle(letterBits[i], for: UIControl.State())
+                }
             }
+        } else {
+            alertNewGame()
         }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        loadLevel()
+        levelLoad()
     }
 
 
